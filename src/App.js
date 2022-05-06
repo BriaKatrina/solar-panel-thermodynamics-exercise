@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import diagram from './assets/diagram.png';
 import './App.css';
 
