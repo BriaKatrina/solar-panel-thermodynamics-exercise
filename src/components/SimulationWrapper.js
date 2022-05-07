@@ -27,9 +27,13 @@ function SimulationWrapper(flowRate, tIn) {
 
         render() {
             return (
-                <Fragment>
-
-                </Fragment>
+                <div style={{position:"absolute", color:"#F9C219", textAlign:"left", left: 64, top: 25}}>
+                    <div>T in: {this.state.tIn}</div>
+                    <div>T out: {this.state.tOut}</div>
+                    <div>T rise: {this.state.tRise}</div>
+                    <div>flow rate: {this.state.flowRate}</div>
+                    <div>heat removed: {this.state.heatRemoved}</div>
+                </div>
             )
         }
     }
