@@ -4,7 +4,7 @@ import diagram from './assets/diagram.png';
 import './App.css';
 
 function App() {
-  const Simulation = SimulationWrapper()
+  const Simulation = SimulationWrapper(3, 60);
 
   return (
     <div className="App">
