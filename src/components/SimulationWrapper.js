@@ -14,7 +14,7 @@ function SimulationWrapper(flowRate, tIn) {
                 temperatureOut: 80,
                 flowRate: flowRate,
                 exch: 0.25, // exchanger effectiveness
-                specificHeat: 1,
+                specificHeat: 4182, // J/kg°C
                 storageMass: 10,
                 time: 0
             }
@@ -23,7 +23,30 @@ function SimulationWrapper(flowRate, tIn) {
             this.simulateWaterFlowheat();
         }
 
-        simulateWaterFlowheat() {
+        simulateWaterFlowheat() { // broken
+
+            const exch = this.state.exch;
+            const m = this.state.storageMass;
+            const cp = this.state.specificHeat;
+            const tSrc = this.state.temperatureSource;
+            const tStart = this.state.temperatureStart;
+
+            const solarIrradiance = 1000;
+            const efficiency = 0.7;
+            const area = 1;
+            const q_dot = solarIrradiance*efficiency*area; // rate of energy (power)
+
+            const tOut = tStart + (q_dot * this.state.time / (cp * m));
+
+            const time = this.state.time + this.timestep;
+            this.setState({
+                temperatureOut: tOut,
+                time: time
+            });
+            setTimeout(() => {this.simulateWaterFlowheat()}, this.timestep); // recursively iterate
+        }
+
+        simulateWaterFlowheatAttempt1() { // broken
 
             const exch = this.state.exch;
             const m = this.state.storageMass;
@@ -40,8 +63,9 @@ function SimulationWrapper(flowRate, tIn) {
                 temperatureOut: tOut,
                 time: time
             });
-            setTimeout(() => {this.simulateWaterFlowheat()}, this.timestep); // recursively iterate
+            setTimeout(() => {this.simulateWaterFlowheatAttempt1()}, this.timestep); // recursively iterate
         }
+
 
         componentDidMount() {
 
